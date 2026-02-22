@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'OCR A';
+      src: local('OCR A Extended'), local('OCR A BT'), local('OCRA'), local('OCR-A');
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #ffffff;
+      color: #0a0a0a;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      position: relative;
+      width: 100%;
+    }
+
+    .slide img.bg {
+      width: 100%;
+      display: block;
+    }
+
+    .slide a.label-btn {
+      position: absolute;
+      display: block;
+      cursor: pointer;
+      background: transparent;
+      text-decoration: none;
+    }
+
+    .slide-1 a.label-btn {
+      left: 42%; right: 42%; bottom: 9%; height: 5%;
+    }
+    .slide-2 a.label-btn {
+      left: 37%; right: 37%; bottom: 9%; height: 5%;
+    }
+    .slide-3 a.label-btn {
+      left: 46%; right: 46%; bottom: 9%; height: 5%;
+    }
+
+    .slide a.label-btn:hover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-bottom: 1.5px solid #0a0a0a;
+    }
+
+    /* ── REVEAL PANEL ── */
+    .reveal-panel {
+      width: 100%;
+      background: #ffffff;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.6s ease;
+    }
+
+    .reveal-panel.open {
+      max-height: 2000px;
+      opacity: 1;
+    }
+
+    .reveal-inner {
+      padding: 72px 40px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .reveal-text {
+      font-family: 'OCR A Extended', 'OCR A BT', 'Courier New', monospace;
+      font-size: clamp(0.75rem, 1.2vw, 0.92rem);
+      line-height: 2;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      white-space: pre-wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+
+    .reveal-panel.open .reveal-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hide-btn {
+      margin-top: 48px;
+      display: inline-block;
+      font-family: 'OCR A Extended', 'OCR A BT', 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .hide-btn:hover { color: #0a0a0a; }
+
+    /* ── FOOTER ── */
+    footer {
+      width: 100%;
+      padding: 52px 40px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .take-test-btn {
+      font-family: 'OCR A Extended', 'OCR A BT', 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .take-test-btn:hover {
+      opacity: 0.4;
+    }
+
+    @media (max-width: 768px) {
+      footer { padding: 40px 20px; }
+      .reveal-inner { padding: 40px 20px 56px; }
+      .reveal-text { font-size: 0.72rem; line-height: 1.85; }
+
+      /* widen hit areas on mobile so labels are easier to tap */
+      .slide-1 a.label-btn { left: 32%; right: 32%; bottom: 8%; height: 6%; }
+      .slide-2 a.label-btn { left: 24%; right: 24%; bottom: 8%; height: 6%; }
+      .slide-3 a.label-btn { left: 40%; right: 40%; bottom: 8%; height: 6%; }
+    }
+
+    @media (max-width: 430px) {
+      .reveal-text { font-size: 0.65rem; line-height: 1.8; letter-spacing: 0.02em; }
+      .reveal-inner { padding: 32px 16px 48px; }
+
+      .slide-1 a.label-btn { left: 28%; right: 28%; bottom: 7%; height: 7%; }
+      .slide-2 a.label-btn { left: 18%; right: 18%; bottom: 7%; height: 7%; }
+      .slide-3 a.label-btn { left: 36%; right: 36%; bottom: 7%; height: 7%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- stack00: top -->
+  <div class="slide slide-00">
+    <img class="bg" src="stack00.png" alt="" />
+  </div>
+
+  <!-- stack0: no label -->
+  <div class="slide slide-0">
+    <img class="bg" src="stack0.png" alt="" />
+  </div>
+
+  <!-- stack1: WORKFLOW -->
+  <div class="slide slide-1">
+    <img class="bg" src="stack1.png" alt="" />
+    <a class="label-btn" href="#" onclick="togglePanel('panel1'); return false;"></a>
+  </div>
+  <div class="reveal-panel" id="panel1">
+    <div class="reveal-inner">
+      <div class="reveal-text">A STRANGER COMES ACROSS A QR CODE SCANS IT IT TAKES THEM TO THE PC13 PROGRAM REGISTRATION PAGE. YOU COULD EITHER REGISTER IN THEATRE OR SPECTATOR SPECTATORS HAVE LIMITED SEATS THEATRE HAS A LIMITED TIME SLOT FOR BOTH WE'RE LOOKING FOR THE FIRST 100 REGISTRATIONS
+
+ONCE REGISTRATION IS COMPLETED THEY GET EMAILED A RECEIPT WITH ACCESS CODES INSTRUCTIONS AND THE DAYS SCHEDULE
+
+THERE WILL BE NO IN PERSON SALES ONLY WAY TO GET IN WOULD BE TO TRADE PLACES WITH SOMEONE WHICH WOULD LEAVE A TEMPORARY BAN ON YOUR RECORD
+
+CAUSE WE FEEL THIS IS SOMETHING YOU SHOULDN'T TRADE FOR ANYTHING AND IF YOU FEEL LIKE YOU CAN THEN YOU SHOULDN'T BE HERE
+
+SCAN QR CODE
+WEBSITE
+REGISTRATION   EVENTBRITE TICKETMASTER SEATS OR STRIPE MEMBERSHIP PLAN
+DSTV ADULT SWIM SCHEDULE AND HIDDEN FEATURES TRACKLIST         UNLOCK TOURDATES LOCATIONS
+ACCESS CODES RECEIPTS        LIMITED SEATS FEW ON DAY SALES HIGHER BIDDER WITH FRIENDS PRICES
+
+SCHEDULE IS SIMILAR TO THE CHURCHES
+
+DAY STARTS
+WE BROADCAST LIVE
+WE DESIGN THE ENVIRONMENT
+WE HAVE ARCHIVERS RESPONSIBLE FOR REDCARPET PAPARAZZI PHOTOGRAPHY, FILMING AND PERSONAL IDS WHICH IS SOMETHING EVERY MEMBER WILL HAVE
+
+WE HAVE THEATRE   A CONCERT  WITH   SET LIST   HIDDEN FEATURES AND AN AMAZING REFEREE
+
+WE HAVE A TED TALK   FIRESIDE CHAT  PRESS WITH THE MONTHS COLLABORATOR
+
+WE HAVE ANNOUNCEMENTS
+
+WE HAVE AN OFFERING SEGMENT CALLED MATT2BEN FOR FINANCIAL SUPPORT OF OTHER PROJECTS  RENT OR ANYTHING WE NEED A FLYING CARPET FOR
+
+WE HAVE A FIRST TIMERS  WELCOME THING  INITIATION WITH FORMS
+
+WE HAVE A SECOND TIMERS WELCOME THING  INITIATION WITH FORMS
+
+WE DO NOT HAVE A CULT INITIATION CHANT  AND   SELFIE SHAREABLE SOCIAL CURRENCY BADGE THING
+
+WE HAVE A STAGE DESIGN PRODUCTION SET DOWN THING</div>
+      <button class="hide-btn" onclick="togglePanel('panel1')">— HIDE TEXT</button>
+    </div>
+  </div>
+
+  <!-- stack2: HEALTH BENEFITS -->
+  <div class="slide slide-2">
+    <img class="bg" src="stack2.png" alt="" />
+    <a class="label-btn" href="#" onclick="togglePanel('panel2'); return false;"></a>
+  </div>
+  <div class="reveal-panel" id="panel2">
+    <div class="reveal-inner">
+      <div class="reveal-text">NO MORE BARRIERS BETWEEN THE STORY AND ITS AUDIENCE
+DELETION OF ALIENATION VIA COLLABORATION
+LEARNING IMPULSIVELY, STORIES ARE REGISTERED INTO THE SUBCONSCIOUS EASIER WHILE PLAYING
+UNIVERSALLY COMPATIBLE FOR ALL TYPES OF LEARNERS AUDIO, VISUAL, TEXT ETC.
+BYPASS LEARNING DISTRACTIONS 100 TIMES EASIER</div>
+      <button class="hide-btn" onclick="togglePanel('panel2')">— HIDE TEXT</button>
+    </div>
+  </div>
+
+  <!-- stack3: FAQ -->
+  <div class="slide slide-3">
+    <img class="bg" src="stack3.png" alt="" />
+    <a class="label-btn" href="#" onclick="togglePanel('panel3'); return false;"></a>
+  </div>
+  <div class="reveal-panel" id="panel3">
+    <div class="reveal-inner">
+      <div class="reveal-text">ETHOS?
+WE BELIEVE ARTISTS HAVING AN OPPORTUNITY TO CREATE AND EXPRESS IS A MANDATORY NET POSITIVE FOR SOCIETY
+
+HOW CAN I BE A PART OF THIS? HOW DO I JOIN?
+REGISTER ONLINE ON WEBSITE. LOOK FOR PLAY TOUR DATES NEAR YOU
+
+HOW DO I JOIN? SUPPORT?
+MATT2BEN FOR ALL AVAILABLE ROLES
+
+WHATS THE MISSION?
+AID THE CHURCH IN SAVING OF SOULS FOR CHRIST</div>
+      <button class="hide-btn" onclick="togglePanel('panel3')">— HIDE TEXT</button>
+    </div>
+  </div>
+
+  <footer>
+    <a class="take-test-btn" href="https://tally.so/r/ob2lRO" target="_blank" rel="noopener">TAKE TEST</a>
+  </footer>
+
+  <script>
+    function togglePanel(id) {
+      const panel = document.getElementById(id);
+      panel.classList.toggle('open');
+      if (panel.classList.contains('open')) {
+        setTimeout(() => {
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
+      }
+    }
+  </script>
+
+</body>
+</html>
